@@ -3,3 +3,6 @@
 
 # Executables
 *.exe
+
+# Editor files
+.vscode
