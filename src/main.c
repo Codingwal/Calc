@@ -33,6 +33,9 @@ void printBinary(int64_t value)
             b <<= 1;
         }
     }
+
+    if (!oneFound)
+        putchar('0');
 }
 
 int main(int argc, char *argv[])

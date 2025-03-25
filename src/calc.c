@@ -20,14 +20,41 @@ int64_t parseAtom()
     }
 
     if (it[1] == 'x')
-        result = strtol(it + 2, NULL, 16); // Skip 0x
+    {
+        it += 2; // Skip "0x"
+        result = strtol(it, NULL, 16);
+    }
     else if (it[1] == 'b')
-        result = strtol(it + 2, NULL, 2); // Skip 0b
+    {
+        it += 2; // Skip "0b"
+        result = strtol(it, NULL, 2);
+    }
     else
         result = strtol(it, NULL, 10);
 
-    while (isalnum(*it))
+    while (isdigit(*it) || ('a' <= *it && *it <= 'f') || ('A' <= *it && *it <= 'F'))
         it++;
+
+    if (isalpha(*it))
+    {
+        if (it[1] == 'i' && it[2] == 'B')
+        {
+            switch (it[0])
+            {
+            case 'K': // Kibibytes
+                it += 3;
+                return result * 1024;
+            case 'M': // Mebibytes
+                it += 3;
+                return result * 1024 * 1024;
+            case 'G': // Gibibytes
+                it += 3;
+                return result * 1024 * 1024 * 1024;
+            default:
+                error("Invalid unit (\"%s\")", it);
+            }
+        }
+    }
 
     return result;
 }
