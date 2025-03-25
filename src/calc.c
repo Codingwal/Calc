@@ -3,6 +3,9 @@
 #include <ctype.h>
 #include "error.h"
 
+// Algorithm from
+// https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing
+
 static const char *it;
 
 int64_t parseExpr(int minPrec); // Forward declaration
