@@ -71,6 +71,8 @@ int main(int argc, char *argv[])
     if (outputBase == 0)
         outputBase = 10;
 
+    printf("Input expression: \"%s\"\n", argv[argc - 1]);
+
     int64_t res = calc(argv[argc - 1]);
 
     puts("\n");

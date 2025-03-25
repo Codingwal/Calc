@@ -15,6 +15,7 @@ int64_t parseAtom()
 
     if (*it == '(')
     {
+        it++;
         result = parseExpr(1);
         it++;
         return result;
@@ -88,7 +89,7 @@ int64_t calcValue(int64_t lhs, char operator, int64_t rhs)
         lhs /= rhs;
         break;
     default:
-        error("Invalid operator '%c'!!!", operator);
+        error("Invalid operator '%c'", operator);
         break;
     }
     return lhs;
