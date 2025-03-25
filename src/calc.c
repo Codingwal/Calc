@@ -3,8 +3,6 @@
 #include <ctype.h>
 #include "error.h"
 
-#include <stdio.h>
-
 static const char *it;
 
 int64_t parseExpr(int minPrec); // Forward declaration
@@ -107,16 +105,11 @@ int64_t parseExpr(int minPrec)
     int64_t result = parseAtom(it);
     consumeSpaces();
 
-    printf("parseExpr: result: %lld, *it: '%c' (%d)\n", result, *it, (int)*it);
-
     while (precedence(*it) >= minPrec)
     {
-        printf("!\n");
         char op = *it;
         int prec = precedence(op);
         Associativity assoc = associativity(op);
-
-        printf("1 prec: %d, assoc: %d, *it: '%c' (%d)\n", prec, (int)assoc, *it, (int)*it);
 
         int nextMinPrec;
         if (assoc == LEFT)
@@ -126,15 +119,12 @@ int64_t parseExpr(int minPrec)
 
         it++; // Advance from operator to value
 
-        printf("2 prec: %d, assoc: %d, *it: '%c' (%d)\n", prec, (int)assoc, *it, (int)*it);
-
         int64_t rhs = parseExpr(nextMinPrec);
         result = calcValue(result, op, rhs);
 
         consumeSpaces();
     }
 
-    printf("res: %lld\n", result);
     return result;
 }
 

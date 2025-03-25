@@ -71,16 +71,12 @@ int main(int argc, char *argv[])
     if (outputBase == 0)
         outputBase = 10;
 
-    printf("Input expression: \"%s\"\n", argv[argc - 1]);
-
     int64_t res = calc(argv[argc - 1]);
-
-    puts("\n");
 
     if (outputBase == 10)
         printf("Result: %lld\n", res);
     else if (outputBase == 16)
-        printf("Result: 0x%llx\n", res);
+        printf("Result: 0x%llX\n", res);
     else if (outputBase == 2)
     {
         printf("Result: 0b");
