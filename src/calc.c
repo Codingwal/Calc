@@ -25,15 +25,15 @@ int64_t parseAtom()
     if (it[1] == 'x')
     {
         it += 2; // Skip "0x"
-        result = strtol(it, NULL, 16);
+        result = strtoll(it, NULL, 16);
     }
     else if (it[1] == 'b')
     {
         it += 2; // Skip "0b"
-        result = strtol(it, NULL, 2);
+        result = strtoll(it, NULL, 2);
     }
     else
-        result = strtol(it, NULL, 10);
+        result = strtoll(it, NULL, 10);
 
     while (isdigit(*it) || ('a' <= *it && *it <= 'f') || ('A' <= *it && *it <= 'F'))
         it++;
