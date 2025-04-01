@@ -70,14 +70,17 @@ int precedence(char operator)
     case ')':  // Special case required for subexpressions
     case '\0': // Special case for end of string
         return 0;
+    case '<':
+    case '>':
+        return 1;
     case '+':
     case '-':
-        return 1;
+        return 2;
     case '*':
     case '/':
-        return 2;
-    case '^':
         return 3;
+    case '^':
+        return 4;
     default:
         error("Invalid operator '%c' (%d)", operator,(int) operator);
         return -1; // Never reached
@@ -98,6 +101,8 @@ int associativity(char operator)
     case '-':
     case '*':
     case '/':
+    case '<':
+    case '>':
         return LEFT;
     default:
         error("Invalid operator '%c'", operator);
@@ -123,6 +128,12 @@ int64_t calcValue(int64_t lhs, char operator, int64_t rhs)
         break;
     case '^':
         lhs = (int64_t)pow(lhs, rhs);
+        break;
+    case '<':
+        lhs <<= rhs;
+        break;
+    case '>':
+        lhs >>= rhs;
         break;
     default:
         error("Invalid operator '%c'", operator);
