@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "error.h"
+#include <math.h>
 
 // Algorithm from
 // https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing
@@ -75,6 +76,8 @@ int precedence(char operator)
     case '*':
     case '/':
         return 2;
+    case '^':
+        return 3;
     default:
         error("Invalid operator '%c' (%d)", operator,(int) operator);
         return -1; // Never reached
@@ -89,6 +92,8 @@ int associativity(char operator)
 {
     switch (operator)
     {
+    case '^':
+        return RIGHT;
     case '+':
     case '-':
     case '*':
@@ -115,6 +120,9 @@ int64_t calcValue(int64_t lhs, char operator, int64_t rhs)
         break;
     case '/':
         lhs /= rhs;
+        break;
+    case '^':
+        lhs = (int64_t)pow(lhs, rhs);
         break;
     default:
         error("Invalid operator '%c'", operator);
